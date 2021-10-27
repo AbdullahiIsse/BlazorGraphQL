@@ -1,8 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using AdvancedTodo.Models;
+using GraphQL;
+using GraphQL.Client.Http;
+using GraphQL.Common.Request;
 
 namespace AdvancedTodo.Data
 {
@@ -27,22 +32,27 @@ namespace AdvancedTodo.Data
 
         private void Seed()
         {
-            Todo[] ts =
-            {
-                new Todo {UserId = 1, TodoId = 1, Title = "Do dishes", IsCompleted = false},
-                new Todo {UserId = 1, TodoId = 2, Title = "Walk the dog", IsCompleted = false},
-                new Todo {UserId = 2, TodoId = 3, Title = "Do DNP homework", IsCompleted = true},
-                new Todo {UserId = 3, TodoId = 4, Title = "Eat breakfast", IsCompleted = false},
-                new Todo {UserId = 4, TodoId = 5, Title = "Mow lawn", IsCompleted = true},
-            };
-            todos = ts.ToList();
+            
         }
 
 
-        public IList<Todo> GetTodos()
+        public async Task<IList<Todo>> GetTodos()
         {
-            List<Todo> tmp = new List<Todo>(todos);
-            return tmp;
+            using var client = new GraphQLHttpClient(new GraphQLHttpClientOptions
+            {
+                EndPoint = new Uri("https://localhost:5001/graphql")
+            });
+
+            var request = new GraphQLRequest
+            {
+                Query = "query{todos {userId,todoId,title,isCompleted}}"
+            };
+            var response = await client.SendQueryAsync(request);
+
+            IList<Todo> todos = response.GetDataFieldAs<IList<Todo>>("todos");
+            
+
+            return todos;
         }
 
         public void AddTodo(Todo todo)

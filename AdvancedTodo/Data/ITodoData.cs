@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdvancedTodo.Models;
 
 namespace AdvancedTodo.Data
@@ -7,7 +8,7 @@ namespace AdvancedTodo.Data
     {
 
 
-        IList<Todo> GetTodos();
+        Task<IList<Todo>> GetTodos();
         void AddTodo(Todo todo);
         void RemoveTodo(int todoId);
 
