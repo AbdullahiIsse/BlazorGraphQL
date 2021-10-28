@@ -40,7 +40,19 @@
           "dependencies": {
             "GraphQL.Client": {
               "target": "Package",
-              "version": "[2.0.0-alpha.3, )"
+              "version": "[4.0.0, )"
+            },
+            "GraphQL.Client.Serializer.Newtonsoft": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
+            "GraphQL.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[4.6.1, )"
+            },
+            "GraphQL.Server.Transports.AspNetCore.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.2, )"
             }
           },
           "imports": [

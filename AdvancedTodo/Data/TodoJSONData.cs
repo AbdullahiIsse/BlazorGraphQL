@@ -1,13 +1,11 @@
-using System;
+
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using AdvancedTodo.Models;
 using GraphQL;
 using GraphQL.Client.Http;
-using GraphQL.Common.Request;
+using GraphQL.Client.Serializer.Newtonsoft;
+
 
 namespace AdvancedTodo.Data
 {
@@ -15,109 +13,98 @@ namespace AdvancedTodo.Data
     {
         public async Task<IList<Todo>> GetTodos()
         {
-            using var client = new GraphQLHttpClient(new GraphQLHttpClientOptions
-            {
-                EndPoint = new Uri("https://localhost:5001/graphql")
-            });
+            using var client = new GraphQLHttpClient("https://localhost:5001/graphql"
+                , new NewtonsoftJsonSerializer());
 
             var request = new GraphQLRequest
             {
                 Query = "query{todos {userId,todoId,title,isCompleted}}"
             };
-            var response = await client.SendQueryAsync(request);
+            var response = await client.SendQueryAsync<ResponseTodoCollectionType>(request);
 
-            IList<Todo> todos = response.GetDataFieldAs<IList<Todo>>("todos");
-            
+           
 
-            return todos;
+
+            return response.Data.Todos;
         }
 
         public async void AddTodo(Todo todo)
         {
-            
-            using var client = new GraphQLHttpClient(new GraphQLHttpClientOptions
-            {
-                EndPoint = new Uri("https://localhost:5001/graphql")
-            });
-            
-            
+            using var client = new GraphQLHttpClient("https://localhost:5001/graphql"
+                , new NewtonsoftJsonSerializer());
+
+
             var request = new GraphQLRequest
             {
-                Query = "mutation ($userid: Int!,$title:String!)  {addTodo(userid: $userid, title: $title) {todoId,userId,title,isCompleted}}",
+                Query =
+                    "mutation ($userid: Int!,$title:String!)  {addTodo(userid: $userid, title: $title) {todoId,userId,title,isCompleted}}",
                 Variables = new
                 {
                     userid = todo.UserId,
-                    title=todo.Title
+                    title = todo.Title
                 }
             };
 
-            await client.SendMutationAsync(request);
-
+            await client.SendMutationAsync<ResponseTodoType>(request);
         }
 
         public async void RemoveTodo(int todoId)
         {
-            using var client = new GraphQLHttpClient(new GraphQLHttpClientOptions
-            {
-                EndPoint = new Uri("https://localhost:5001/graphql")
-            });
-            
-            
+            using var client = new GraphQLHttpClient("https://localhost:5001/graphql"
+                , new NewtonsoftJsonSerializer());
+
+
             var request = new GraphQLRequest
             {
                 Query = "mutation($id:Int!) {deleteTodo(id:$id)}",
                 Variables = new
                 {
                     id = todoId
-                  
                 }
             };
 
-            await client.SendMutationAsync(request);
+            await client.SendMutationAsync<ResponseTodoType>(request);
         }
 
         public async void Update(Todo todo)
         {
-            
-            using var client = new GraphQLHttpClient(new GraphQLHttpClientOptions
-            {
-                EndPoint = new Uri("https://localhost:5001/graphql")
-            });
-            
-            
+            using var client = new GraphQLHttpClient("https://localhost:5001/graphql"
+                ,new NewtonsoftJsonSerializer() );
+
+
             var request = new GraphQLRequest
             {
-                Query = "mutation($id:Int!,$userid:Int!,$title:String!){updateTodo(id:$id,userid:$userid,title:$title){todoId,userId,title}}",
+                Query =
+                    "mutation($id:Int!,$userid:Int!,$title:String!){updateTodo(id:$id,userid:$userid,title:$title){todoId,userId,title}}",
                 Variables = new
                 {
                     id = todo.TodoId,
                     userid = todo.UserId,
-                    title=todo.Title
-                  
+                    title = todo.Title
                 }
             };
 
-            await client.SendMutationAsync(request);
-            
+            await client.SendMutationAsync<ResponseTodoType>(request);
         }
 
-        public async Task<Todo> Get(int id)
+        public async Task<Todo> Get(int todoId)
         {
-            using var client = new GraphQLHttpClient(new GraphQLHttpClientOptions
-            {
-                EndPoint = new Uri("https://localhost:5001/graphql")
-            });
+            using var client = new GraphQLHttpClient("https://localhost:5001/graphql"
+                ,new NewtonsoftJsonSerializer() );
 
             var request = new GraphQLRequest
             {
-                Query = "query{todos(where:{todoId: {eq:1}}){todoId,title}}",
-               
+                Query = "query($id:Int!) {todos(where: {todoId: {eq:$id}}) {userId,todoId,title,isCompleted}}",
+                Variables = new
+                {
+                    id = todoId
+                }
             };
-            var response = await client.SendQueryAsync(request);
 
-            return response.GetDataFieldAs<Todo>("todos");
-        }
+            var response = await client.SendQueryAsync<ResponseTodoType>(request);
 
         
+            return response.Data.Todo;
+        }
     }
 }

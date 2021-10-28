@@ -5,7 +5,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="GraphQL.Client" Version="2.0.0-alpha.3" />
+      <PackageReference Include="GraphQL.Client" Version="4.0.0" />
+      <PackageReference Include="GraphQL.Client.Serializer.Newtonsoft" Version="4.0.0" />
+      <PackageReference Include="GraphQL.NewtonsoftJson" Version="4.6.1" />
+      <PackageReference Include="GraphQL.Server.Transports.AspNetCore.NewtonsoftJson" Version="5.0.2" />
     </ItemGroup>
 
 </Project>

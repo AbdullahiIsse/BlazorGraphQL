@@ -105,13 +105,14 @@ using AdvancedTodo.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 29 "C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\Pages\Edit.razor"
+#line 27 "C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\Pages\Edit.razor"
        
 
     [Parameter]
     public int Id { get; set; }
 
     private Todo todoToEdit;
+
 
     protected override async Task OnInitializedAsync()
     {

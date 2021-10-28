@@ -186,4 +186,16 @@ C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\obj\Debug\net5.0\Advance
 C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\obj\Debug\net5.0\ref\AdvancedTodo.dll
 C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\obj\Debug\net5.0\AdvancedTodo.pdb
 C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\obj\Debug\net5.0\AdvancedTodo.genruntimeconfig.cache
-C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\GraphQL.Common.dll
+C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\GraphQL.dll
+C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\GraphQL-Parser.dll
+C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\GraphQL.Client.Abstractions.dll
+C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\GraphQL.Client.Abstractions.Websocket.dll
+C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\GraphQL.Client.Serializer.Newtonsoft.dll
+C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\GraphQL.DataLoader.dll
+C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\GraphQL.NewtonsoftJson.dll
+C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\GraphQL.Primitives.dll
+C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\GraphQL.Server.Core.dll
+C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\GraphQL.Server.Transports.AspNetCore.dll
+C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\GraphQL.Server.Transports.AspNetCore.NewtonsoftJson.dll
+C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\System.Reactive.dll
+C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\bin\Debug\net5.0\System.Reactive.xml
