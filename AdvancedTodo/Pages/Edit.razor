@@ -17,7 +17,7 @@ else
 {
     <EditForm Model="@todoToEdit" OnValidSubmit="@Save">
         <DataAnnotationsValidator/> <ValidationSummary/>
-        <div class="form-group"> User Id:<br/> <InputNumber @bind-Value="todoToEdit.UserId"/> </div>
+        <div class="form-group"> Todo Id:<br/> <InputNumber @bind-Value="todoToEdit.TodoId"/> </div>
         <div class="form-group"> Title:<br/> <InputTextArea rows="4" @bind-Value="todoToEdit.Title"/> </div>
         <p class="actions">
             <button class="btn btn-outline-dark" type="submit">Save</button>
@@ -35,7 +35,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        todoToEdit = TodoData.Get(Id);
+        todoToEdit = await TodoData.Get(Id);
     }
 
     private void Save()

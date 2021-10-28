@@ -13,29 +13,6 @@ namespace AdvancedTodo.Data
 {
     public class TodoJsonData : ITodoData
     {
-        private string todoFile = "todos.json";
-        private IList<Todo> todos;
-
-        public TodoJsonData()
-        {
-            if (!File.Exists(todoFile))
-            {
-                Seed();
-                WriteTodossToFile();
-            }
-            else
-            {
-                string content = File.ReadAllText(todoFile);
-                todos = JsonSerializer.Deserialize<List<Todo>>(content);
-            }
-        }
-
-        private void Seed()
-        {
-            
-        }
-
-
         public async Task<IList<Todo>> GetTodos()
         {
             using var client = new GraphQLHttpClient(new GraphQLHttpClientOptions
@@ -55,38 +32,92 @@ namespace AdvancedTodo.Data
             return todos;
         }
 
-        public void AddTodo(Todo todo)
+        public async void AddTodo(Todo todo)
         {
-            int max = todos.Max(todo => todo.TodoId);
-            todo.TodoId = (++max);
-            todos.Add(todo);
-            WriteTodossToFile();
+            
+            using var client = new GraphQLHttpClient(new GraphQLHttpClientOptions
+            {
+                EndPoint = new Uri("https://localhost:5001/graphql")
+            });
+            
+            
+            var request = new GraphQLRequest
+            {
+                Query = "mutation ($userid: Int!,$title:String!)  {addTodo(userid: $userid, title: $title) {todoId,userId,title,isCompleted}}",
+                Variables = new
+                {
+                    userid = todo.UserId,
+                    title=todo.Title
+                }
+            };
+
+            await client.SendMutationAsync(request);
+
         }
 
-        public void RemoveTodo(int todoId)
+        public async void RemoveTodo(int todoId)
         {
-            Todo toRemove = todos.First(t => t.TodoId == todoId);
-            todos.Remove(toRemove);
-            WriteTodossToFile();
+            using var client = new GraphQLHttpClient(new GraphQLHttpClientOptions
+            {
+                EndPoint = new Uri("https://localhost:5001/graphql")
+            });
+            
+            
+            var request = new GraphQLRequest
+            {
+                Query = "mutation($id:Int!) {deleteTodo(id:$id)}",
+                Variables = new
+                {
+                    id = todoId
+                  
+                }
+            };
+
+            await client.SendMutationAsync(request);
         }
 
-        public void Update(Todo todo)
+        public async void Update(Todo todo)
         {
-            Todo toUpdate = todos.First(t => t.TodoId == todo.TodoId);
-            toUpdate.IsCompleted = todo.IsCompleted;
-            toUpdate.Title = todo.Title;
-            WriteTodossToFile();
+            
+            using var client = new GraphQLHttpClient(new GraphQLHttpClientOptions
+            {
+                EndPoint = new Uri("https://localhost:5001/graphql")
+            });
+            
+            
+            var request = new GraphQLRequest
+            {
+                Query = "mutation($id:Int!,$userid:Int!,$title:String!){updateTodo(id:$id,userid:$userid,title:$title){todoId,userId,title}}",
+                Variables = new
+                {
+                    id = todo.TodoId,
+                    userid = todo.UserId,
+                    title=todo.Title
+                  
+                }
+            };
+
+            await client.SendMutationAsync(request);
+            
         }
 
-        public Todo Get(int id)
+        public async Task<Todo> Get(int id)
         {
-            return todos.FirstOrDefault(t => t.TodoId == id);
+            using var client = new GraphQLHttpClient(new GraphQLHttpClientOptions
+            {
+                EndPoint = new Uri("https://localhost:5001/graphql")
+            });
+
+            var request = new GraphQLRequest
+            {
+                Query = "query{todos(where:{todoId: {eq:1}}){todoId,title}}",
+               
+            };
+            var response = await client.SendQueryAsync(request);
+
+            return response.GetDataFieldAs<Todo>("todos");
         }
 
-        private void WriteTodossToFile()
-        {
-            string todosAsJson = JsonSerializer.Serialize(todos);
-            File.WriteAllText(todoFile, todosAsJson);
-        }
+        
     }
 }

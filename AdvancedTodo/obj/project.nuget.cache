@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Mb805h9RvboNugLhtBUQF3x0ziTiNL7yn1azHQAoa6yZu7oP0HeyHfg8hBkuMYH1+/r8iWnMy6U1CntUqvnhZw==",
+  "dgSpecHash": "gVRh5e4U31kWO4UWPLzblebUMrC9Wa8C2DBVf8JUKYIjME76wiJIIQcw8urJi5sC3CKb8HNwTPG0GOnwtu6wag==",
   "success": true,
-  "projectFilePath": "C:\\Users\\abdul\\RiderProjects\\Blazor-TODO\\AdvancedTodo\\AdvancedTodo.csproj",
+  "projectFilePath": "C:\\Users\\abdul\\RiderProjects\\BlazorGraphQL\\AdvancedTodo\\AdvancedTodo.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\abdul\\.nuget\\packages\\graphql.client\\2.0.0-alpha.3\\graphql.client.2.0.0-alpha.3.nupkg.sha512",
     "C:\\Users\\abdul\\.nuget\\packages\\graphql.common\\2.0.0-alpha.3\\graphql.common.2.0.0-alpha.3.nupkg.sha512",
