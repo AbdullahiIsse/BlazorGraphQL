@@ -116,7 +116,8 @@ using AdvancedTodo.Data;
 
     protected override async Task OnInitializedAsync()
     {
-        todoToEdit = await TodoData.Get(Id);
+        todoToEdit =   await TodoData.Get(Id);
+      
     }
 
     private void Save()

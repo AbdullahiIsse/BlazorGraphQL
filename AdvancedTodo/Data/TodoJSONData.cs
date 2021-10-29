@@ -90,20 +90,20 @@ namespace AdvancedTodo.Data
         public async Task<Todo> Get(int todoId)
         {
             using var client = new GraphQLHttpClient("https://localhost:5001/graphql"
-                ,new NewtonsoftJsonSerializer() );
+                ,new NewtonsoftJsonSerializer());
 
             var request = new GraphQLRequest
             {
-                Query = "query($id:Int!) {todos(where: {todoId: {eq:$id}}) {userId,todoId,title,isCompleted}}",
+                Query = "query($id:Int!){todosById(id:$id){userId,todoId,title,isCompleted}}",
                 Variables = new
                 {
                     id = todoId
                 }
             };
-
-            var response = await client.SendQueryAsync<ResponseTodoType>(request);
-
-        
+            
+            
+            
+            var response =  await client.SendQueryAsync<ResponseTodoType>(request);
             return response.Data.Todo;
         }
     }

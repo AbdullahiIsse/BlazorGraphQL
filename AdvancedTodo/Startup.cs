@@ -28,7 +28,7 @@ namespace AdvancedTodo
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<ITodoData, TodoJsonData>();
+            services.AddScoped<ITodoData, TodoJsonData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
