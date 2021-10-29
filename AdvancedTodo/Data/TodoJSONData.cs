@@ -102,7 +102,6 @@ namespace AdvancedTodo.Data
             };
             
             
-            
             var response =  await client.SendQueryAsync<ResponseTodoType>(request);
             return response.Data.Todo;
         }
