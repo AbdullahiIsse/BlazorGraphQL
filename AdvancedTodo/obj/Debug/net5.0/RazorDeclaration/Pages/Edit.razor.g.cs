@@ -105,13 +105,13 @@ using AdvancedTodo.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 27 "C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\Pages\Edit.razor"
+#line 34 "C:\Users\abdul\RiderProjects\BlazorGraphQL\AdvancedTodo\Pages\Edit.razor"
        
 
     [Parameter]
     public int Id { get; set; }
 
-    private Todo todoToEdit;
+    private IList<Todo> todoToEdit;
 
 
     protected override async Task OnInitializedAsync()
@@ -122,8 +122,21 @@ using AdvancedTodo.Data;
 
     private void Save()
     {
-        TodoData.Update(todoToEdit);
-        NavMgr.NavigateTo("/Todos");
+        foreach (var item in todoToEdit)
+        {
+
+            Todo todo = new Todo
+            {
+                IsCompleted = item.IsCompleted,
+                Title = item.Title,
+                TodoId = item.TodoId,
+                UserId = item.UserId
+            };
+            
+            TodoData.Update(todo);
+            NavMgr.NavigateTo("/Todos",true);
+        }
+        
     }
 
 

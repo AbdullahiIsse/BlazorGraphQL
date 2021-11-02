@@ -14,7 +14,7 @@ namespace AdvancedTodo.Data
 
         void Update(Todo todo);
 
-        Task<Todo> Get(int todoId);
+        Task<IList<Todo>> Get(int todoId);
 
 
 

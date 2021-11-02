@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AdvancedTodo.Models;
@@ -19,6 +20,7 @@ namespace AdvancedTodo.Data
             var request = new GraphQLRequest
             {
                 Query = "query{todos {userId,todoId,title,isCompleted}}"
+                
             };
             var response = await client.SendQueryAsync<ResponseTodoCollectionType>(request);
 
@@ -87,14 +89,14 @@ namespace AdvancedTodo.Data
             await client.SendMutationAsync<ResponseTodoType>(request);
         }
 
-        public async Task<Todo> Get(int todoId)
+        public async Task<IList<Todo>> Get(int todoId)
         {
             using var client = new GraphQLHttpClient("https://localhost:5001/graphql"
                 ,new NewtonsoftJsonSerializer());
 
             var request = new GraphQLRequest
             {
-                Query = "query($id:Int!){todosById(id:$id){userId,todoId,title,isCompleted}}",
+                Query = "query($id:Int!) {todos(where: {todoId: {eq:$id}}) {userId,todoId,title,isCompleted}}",
                 Variables = new
                 {
                     id = todoId
@@ -102,8 +104,8 @@ namespace AdvancedTodo.Data
             };
             
             
-            var response =  await client.SendQueryAsync<ResponseTodoType>(request);
-            return response.Data.Todo;
+            var response =  await client.SendQueryAsync<ResponseTodoCollectionType>(request);
+            return response.Data.Todos;
         }
     }
 }

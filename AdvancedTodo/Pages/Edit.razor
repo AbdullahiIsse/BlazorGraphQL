@@ -13,14 +13,21 @@
 }
 else
 {
-    <EditForm Model="@todoToEdit" OnValidSubmit="@Save">
+    @foreach (var item in todoToEdit)
+    {
+
+        <EditForm Model="@todoToEdit" OnValidSubmit="@Save">
         <DataAnnotationsValidator/> <ValidationSummary/>
-        <div class="form-group"> User Id:<br/> <InputNumber @bind-Value="todoToEdit.TodoId"/> </div>
-        <div class="form-group"> Title:<br/> <InputTextArea rows="4" @bind-Value="todoToEdit.Title"/> </div>
+        <div class="form-group"> User Id:<br/> <InputNumber @bind-Value="item.UserId"/> </div>
+        <div class="form-group"> Title:<br/> <InputTextArea rows="4" @bind-Value="item.Title"/> </div>
         <p class="actions">
             <button class="btn btn-outline-dark" type="submit">Save</button>
         </p>
     </EditForm>
+    
+     }
+    
+    
 }
 
 
@@ -29,7 +36,7 @@ else
     [Parameter]
     public int Id { get; set; }
 
-    private Todo todoToEdit;
+    private IList<Todo> todoToEdit;
 
 
     protected override async Task OnInitializedAsync()
@@ -40,8 +47,21 @@ else
 
     private void Save()
     {
-        TodoData.Update(todoToEdit);
-        NavMgr.NavigateTo("/Todos");
+        foreach (var item in todoToEdit)
+        {
+
+            Todo todo = new Todo
+            {
+                IsCompleted = item.IsCompleted,
+                Title = item.Title,
+                TodoId = item.TodoId,
+                UserId = item.UserId
+            };
+            
+            TodoData.Update(todo);
+            NavMgr.NavigateTo("/Todos",true);
+        }
+        
     }
 
 
